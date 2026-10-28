@@ -1,0 +1,6 @@
+Created employee ID: 0635
+UI job details validation passed.
+Validating employee ID 0635 through API
+Employee ID: 0635
+Internal employee number: 510
+Employee identity validation passed.

@@ -1,0 +1,7 @@
+Created employee ID: 0485
+UI job details validation passed.
+Validating Employee ID: 0485
+Employee ID: 0485
+API employee validation passed.
+Job Title: QA Engineer
+Employment Status: Full-Time Permanent
