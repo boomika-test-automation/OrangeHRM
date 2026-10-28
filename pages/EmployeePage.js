@@ -207,7 +207,7 @@ class EmployeePage {
         expect(internalEmpNumber).toBeTruthy();
 
         console.log(`Employee ID: ${apiEmployee.employeeId}`);
-        // console.log(`Internal Employee Number: ${internalEmpNumber}`);
+        console.log(`Internal Employee Number: ${internalEmpNumber}`);
 
         // Fetch detailed employee record.
         const detailsResponse = await this.requestEmployeeAPI(
@@ -226,10 +226,10 @@ class EmployeePage {
         );
 
         // Print the real response before mapping fields.
-        // console.log(
-        //     'Job Details API Response:',
-        //     JSON.stringify(jobResponse, null, 2)
-        // );
+        console.log(
+            'Job Details API Response:',
+            JSON.stringify(jobResponse, null, 2)
+        );
 
         const apiJob = Array.isArray(jobResponse.data)
             ? jobResponse.data[0]
