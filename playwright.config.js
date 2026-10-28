@@ -1,44 +1,53 @@
 // @ts-check
-import { defineConfig, devices } from '@playwright/test';
+const { defineConfig, devices } = require('@playwright/test');
 
-export default defineConfig({
+const isCI = !!process.env.CI;
+
+module.exports = defineConfig({
   testDir: './tests',
+
   fullyParallel: false,
-  timeout: 120000,         
-  expect: { timeout: 15000 }, 
-   reporter: [
+  workers: isCI ? 1 : undefined,   
+  retries: isCI ? 2 : 0,           
+  forbidOnly: isCI,               
+
+  timeout: 120000,                
+  expect: { timeout: 15000 },
+
+  reporter: [
     ['list'],
-
-    // HTML Report
-    ['html', {
-      outputFolder: 'playwright-report',
-      open: 'never',
-    }],
-
-    // Allure Report
-    ['allure-playwright', {
-      resultsDir: 'allure-results',
-    }],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+    ['allure-playwright', { resultsDir: 'allure-results' }],
   ],
 
   use: {
-    headless: !!process.env.CI,
+    baseURL: 'https://opensource-demo.orangehrmlive.com',
+    headless: isCI,               
+    actionTimeout: 15000,         
+    navigationTimeout: 60000,
+
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
-    video: 'on',
+    video: 'retain-on-failure',
   },
 
   projects: [
     {
       name: 'chromium',
-      use: {
-        ...devices['Desktop Chrome'],
-        viewport: null,
-        deviceScaleFactor: undefined,
-        launchOptions: {
-          args: ['--start-maximized'],
-        },
-      },
+      use: isCI
+        ? {
+            ...devices['Desktop Chrome'],
+            viewport: { width: 1920, height: 1080 },
+          }
+        : {
+            // Local: use the real maximized browser window.
+            ...devices['Desktop Chrome'],
+            viewport: null,
+            deviceScaleFactor: undefined,
+            launchOptions: {
+              args: ['--start-maximized'],
+            },
+          },
     },
   ],
 });
