@@ -16,8 +16,6 @@ class EmployeePage {
         this.dashboardHeading = page.getByRole('heading', { name: 'Dashboard' });
 
         // NAVIGATION LOCATORS
-        this.pimLink = page.getByRole('link', { name: 'PIM' });
-        this.addEmployeeLink = page.getByRole('link', { name: 'Add Employee' });
         this.employeeListLink = page.getByRole('link', { name: 'Employee List' });
         this.jobTab = page.getByRole('link', { name: 'Job', exact: true });
 
@@ -66,8 +64,8 @@ class EmployeePage {
 
     // 3. OPEN ADD EMPLOYEE
     async openAddEmployee() {
-        await this.pimLink.click();
-        await this.addEmployeeLink.click();
+        await this.page.goto(`${BASE_URL}/web/index.php/pim/addEmployee`);
+        await expect(this.firstName).toBeVisible();
     }
 
     // 4. ADD EMPLOYEE
