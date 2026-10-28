@@ -8,7 +8,7 @@ test(
     'Add employee, update job details, validate API and delete employee',
     async ({ employeePage }) => {
 
-        // Step 1: Login
+         // Step 1: Login
         await employeePage.open();
         await employeePage.login('Admin', 'admin123');
 
