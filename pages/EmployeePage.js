@@ -16,6 +16,8 @@ class EmployeePage {
         this.dashboardHeading = page.getByRole('heading', { name: 'Dashboard' });
 
         // NAVIGATION LOCATORS
+        this.pimLink = page.getByRole('link', { name: 'PIM' });
+        this.addEmployeeLink = page.getByRole('link', { name: 'Add Employee' });
         this.employeeListLink = page.getByRole('link', { name: 'Employee List' });
         this.jobTab = page.getByRole('link', { name: 'Job', exact: true });
 
@@ -64,8 +66,8 @@ class EmployeePage {
 
     // 3. OPEN ADD EMPLOYEE
     async openAddEmployee() {
-        await this.page.goto(`${BASE_URL}/web/index.php/pim/addEmployee`);
-        await expect(this.firstName).toBeVisible();
+        await this.pimLink.click();
+        await this.addEmployeeLink.click();
     }
 
     // 4. ADD EMPLOYEE
@@ -205,7 +207,7 @@ class EmployeePage {
         expect(internalEmpNumber).toBeTruthy();
 
         console.log(`Employee ID: ${apiEmployee.employeeId}`);
-        console.log(`Internal Employee Number: ${internalEmpNumber}`);
+        // console.log(`Internal Employee Number: ${internalEmpNumber}`);
 
         // Fetch detailed employee record.
         const detailsResponse = await this.requestEmployeeAPI(
@@ -224,10 +226,10 @@ class EmployeePage {
         );
 
         // Print the real response before mapping fields.
-        console.log(
-            'Job Details API Response:',
-            JSON.stringify(jobResponse, null, 2)
-        );
+        // console.log(
+        //     'Job Details API Response:',
+        //     JSON.stringify(jobResponse, null, 2)
+        // );
 
         const apiJob = Array.isArray(jobResponse.data)
             ? jobResponse.data[0]
